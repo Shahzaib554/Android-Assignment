@@ -1,5 +1,6 @@
 package com.android.goally.ui.splash
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
@@ -7,8 +8,10 @@ import com.android.goally.BaseActivity
 import com.android.goally.databinding.ActivitySplashBinding
 import com.android.goally.ui.auth.AuthenticationActivity
 import com.android.goally.ui.home.HomeActivity
+import com.android.goally.ui.reminder.ReminderActivity
 import com.android.goally.util.toast
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -19,9 +22,22 @@ class SplashActivity : BaseActivity() {
         binding = ActivitySplashBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        setupViews()
-        setupObservers()
+//        setupViews()
+//        setupObservers()
+        startSplashCountdown()
     }
+
+
+    private fun startSplashCountdown() {
+        lifecycleScope.launch {
+            // Wait for 3 seconds
+            delay(3000)
+            val intent = Intent(this@SplashActivity, ReminderActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
+    }
+
 
     private fun setupObservers() {
         generalViewModel.checkServerHealth(onLoading = {
@@ -30,7 +46,8 @@ class SplashActivity : BaseActivity() {
                 tvProgressStatus.isVisible = it
             }
         }, onSuccess = {
-            goToNextScreen()
+//            goToNextScreen()
+
         }, onError = {
             toast(it)
         })
@@ -60,6 +77,7 @@ class SplashActivity : BaseActivity() {
                 authData?.let {
                     if(it.token.isNullOrEmpty()) {
                         gotoAuthScreen()
+
                     }else{
                         startActivity(HomeActivity.getCallingIntent(this@SplashActivity))
                     }

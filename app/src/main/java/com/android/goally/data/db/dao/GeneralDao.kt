@@ -10,5 +10,5 @@ interface GeneralDao {
     @Query("Select * from authentication")
     fun getAuthenticationLive(): LiveData<Authentication?>
     @Query("Select * from authentication")
-    suspend fun getAuthentication(): Authentication?
+    fun getAuthentication(): Authentication?
 }

@@ -6,11 +6,12 @@ plugins {
     id 'com.google.dagger.hilt.android'
     id 'kotlin-kapt'
     id 'kotlin-android'
+    id 'kotlin-parcelize'
 }
 
 android {
     namespace 'com.android.goally'
-    compileSdk 33
+    compileSdk 34
 
     buildFeatures {
         viewBinding true
@@ -55,13 +56,28 @@ android {
         sourceCompatibility JavaVersion.VERSION_17
         targetCompatibility JavaVersion.VERSION_17
     }
+
+
+    buildFeatures {
+        compose = true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.5.0"
+    }
+
+
     kotlinOptions {
         jvmTarget = '17'
     }
+
+
+
 }
 
 dependencies {
 
+    implementation 'androidx.activity:activity:1.8.0'
+    implementation 'com.google.firebase:protolite-well-known-types:18.0.0'
     constraints {
         implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.8.0") {
             because("kotlin-stdlib-jdk7 is now a part of kotlin-stdlib")
@@ -98,8 +114,9 @@ dependencies {
     implementation 'com.squareup.okhttp3:logging-interceptor:4.10.0'
 
     //hilt - DI
-    implementation "com.google.dagger:hilt-android:2.44"
-    kapt "com.google.dagger:hilt-compiler:2.44"
+    implementation "com.google.dagger:hilt-android:2.48"
+    kapt "com.google.dagger:hilt-compiler:2.48"
+
 
 
     //to manage different screen sizes
@@ -136,4 +153,22 @@ dependencies {
 //    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation 'androidx.webkit:webkit:1.7.0'
     kapt "androidx.room:room-compiler:2.5.2"
+
+    // Jetpack Compose dependencies
+    implementation "androidx.compose.ui:ui:1.5.0"
+    implementation "androidx.compose.material:material:1.5.0"
+    implementation "androidx.compose.ui:ui-tooling-preview:1.5.0"
+    implementation 'androidx.activity:activity-compose:1.7.2'
+    implementation 'androidx.lifecycle:lifecycle-runtime-compose:2.6.1'
+
+    // Coil for Compose
+    implementation("io.coil-kt:coil-compose:2.2.2")
+
+    // Coil for image loading
+    implementation("io.coil-kt:coil:2.2.2")
+
+    //skeleton
+    implementation("me.vponomarenko:compose-shimmer:1.0.0")
+
+
 }
